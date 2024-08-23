@@ -122,8 +122,8 @@ void FlyTracking::ResidualFn::Residual(const mjModel *model, const mjData *data,
   int counter = 0;
 
   // ----- joint velocity ----- //
-  mju_copy(residual + counter, data->qvel - 6, model->nv - 6);
-  counter += model->nv - 6;
+  mju_copy(residual + counter, data->qvel - 9, model->nv - 9);
+  counter += model->nv - 9;
 
   // ----- action ----- //
   mju_copy(&residual[counter], data->ctrl, model->nu);

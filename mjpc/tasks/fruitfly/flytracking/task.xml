@@ -29,11 +29,11 @@
 
 
   <worldbody>
-      <!-- <body name="ball" pos="-0.05 0 -0.546997">
+      <body name="ball" pos="-0.05 0 -0.546997">
         <joint name="ball" pos="0 0 0" type="ball" />
         <geom name="floor" size="0.454" density="0.1" material="ballsurface"/>
-      </body> -->
-    <geom name="floor" size="0 0 0.1" pos="0 0 -0.1" type="plane" material="blue_grid"/>
+      </body>
+    <!-- <geom name="floor" size="0 0 0.1" pos="0 0 -0.1" type="plane" material="blue_grid"/> -->
     <body name="mocap[coxa_T1_left]" mocap="true">
       <site name="mocap[coxa_T1_left]" class="mocap_site"/>
     </body>
@@ -275,7 +275,7 @@
   </sensor>
 
   <include file="./keyframes/Fly_walk_pos1.xml" /> 
-  <include file="./keyframes/Fly_walk_pos2.xml" />  
+  <!-- <include file="./keyframes/Fly_walk_pos2.xml" />  
   <include file="./keyframes/Fly_stand_pos1.xml" />  
-  <include file="./keyframes/Fly_stand_pos2.xml" />  
+  <include file="./keyframes/Fly_stand_pos2.xml" />   -->
 </mujoco>

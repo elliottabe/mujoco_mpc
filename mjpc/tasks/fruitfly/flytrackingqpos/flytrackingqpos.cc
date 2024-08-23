@@ -42,7 +42,7 @@ std::tuple<int, int, double, double> ComputeInterpolationValues(double index,
 constexpr double kFps = 60.0;
 
 constexpr int kMotionLengths[] = {
-    1800,   // FlytrackingQpos
+    // 1800,   // FlytrackingQpos
     99,  // FlyStand
     // 1560,  // FlytrackingQpos
     // 8,  // FlyStand
@@ -150,11 +150,12 @@ void FlyTrackingQpos::ResidualFn::Residual(const mjModel *model, const mjData *d
   
   double avg_foot_pos = 0.167*(foot_pos[kFootT1L][2] + foot_pos[kFootT1R][2] + foot_pos[kFootT2L][2] + foot_pos[kFootT2R][2] + foot_pos[kFootT3L][2] + foot_pos[kFootT3R][2]);
   // avg_foot_pos = 0.167*(foot_pos[kFootT1L][2] + foot_pos[kFootT1R][2] + foot_pos[kFootT2L][2] + foot_pos[kFootT2R][2] + foot_pos[kFootT3L][2] + foot_pos[kFootT3R][2]);
-  double* coxa_right = SensorByName(model, data, "tracking_pos[coxa_T2_left]");
-  double* coxa_left = SensorByName(model, data, "tracking_pos[coxa_T2_right]");
+  double* coxa_right = data->site_xpos + 3 * mj_name2id(model, mjOBJ_SITE, "tracking_pos[coxa_T3_right]");
+  double* coxa_left = data->site_xpos + 3 * mj_name2id(model, mjOBJ_SITE, "tracking_pos[coxa_T3_left]");
+  // double* coxa_left = SensorByName(model, data, "tracking_pos[coxa_T2_left]");
   // double* foot_right = foot_pos[kFootT2L];
   // double* foot_left = foot_pos[kFootT2R];
-  residual[counter++] = avg_foot_pos - thorax_height - 0.2;
+  residual[counter++] = avg_foot_pos - thorax_height - 0.12;
 
 
   // capture point
@@ -189,7 +190,7 @@ void FlyTrackingQpos::ResidualFn::Residual(const mjModel *model, const mjData *d
   pcp[2] = 1.0e-3;
 
   // is standing
-  double standing = thorax_height / mju_sqrt(thorax_height * thorax_height + (0.1 * 0.1)) - 0.2;
+  double standing = thorax_height / mju_sqrt(thorax_height * thorax_height + (0.12 * 0.12));
   mju_sub(&residual[counter], capture_point, pcp, 2);
   mju_scl(&residual[counter], &residual[counter], standing, 2);
   counter += 2;
