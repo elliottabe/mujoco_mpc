@@ -1,7 +1,7 @@
 <mujoco model="FruitFly Qpos2">
   <include file="../../common.xml"/>
   <!-- modified from: https://github.com/google-deepmind/dm_control/blob/main/dm_control/suite/humanoid.xml -->
-  <include file="../fruitfly_force.xml" />
+  <include file="../fruitfly_force_ball.xml" />
   
   <!-- <option timestep="0.0001" />  -->
   <!-- integrator="implicitfast"/> -->
@@ -10,7 +10,7 @@
     <text    name="task_transition" data="Stac|DM" />
     <numeric name="sampling_representation" data="2" />
     <numeric name="agent_planner" data="2" />
-    <numeric name="agent_horizon" data="1.5" />
+    <numeric name="agent_horizon" data="1.0" />
     <numeric name="agent_timestep" data="0.01" />
     <numeric name="sampling_spline_points" data="16" />
     <numeric name="sampling_exploration" data="0.15" />
@@ -33,7 +33,7 @@
         <joint name="ball" pos="0 0 0" type="ball" />
         <geom name="floor" size="0.454" density="0.1" material="ballsurface"/>
       </body> -->
-    <geom name="floor" size="0 0 0.1" pos="0 0 -0.137" type="plane" material="blue_grid"/>
+    <!-- <geom name="floor" size="0 0 0.1" pos="0 0 -0.137" type="plane" material="blue_grid"/> -->
     <body name="mocap[coxa_T1_left]" mocap="true">
       <site name="mocap[coxa_T1_left]" class="mocap_site"/>
     </body>
@@ -132,94 +132,94 @@
   </worldbody>
 
   <sensor>
-    <!-- <user name="JointVel"   dim="36"  user="0 1 0.0 10" /> -->
-    <user name="Control"    dim="36"  user="0 100 0.0 1000.0" />
+    <user name="JointVel"   dim="42"  user="0 1 0.0 10" />
+    <user name="Control"    dim="42"  user="0 50 0.0 100.0" />
 
-    <user name="Pos[coxa_flexion_T1_left]"  dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_twist_T1_left]"    dim="1" user="6 500 0.0 1000.0 0.1" />
-    <!-- <user name="Pos[coxa_T1_left]"     dim="1" user="6 500 0.0 1000.0 0.1" /> -->
-    <user name="Pos[femur_T1_left]"         dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[femur_twist_T1_left]"   dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[tibia_T1_left]"         dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[tarsus_T1_left]"        dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_flexion_T1_right]" dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_twist_T1_right]"   dim="1" user="6 500 0.0 1000.0 0.1" />
-    <!-- <user name="Pos[coxa_T1_right]"    dim="1" user="6 500 0.0 1000.0 0.1" /> -->
-    <user name="Pos[femur_T1_right]"        dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[femur_twist_T1_right]"  dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[tibia_T1_right]"        dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[tarsus_T1_right]"       dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_flexion_T2_left]"  dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_twist_T2_left]"    dim="1" user="6 500 0.0 1000.0 0.1" />
-    <!-- <user name="Pos[coxa_T2_left]"     dim="1" user="6 500 0.0 1000.0 0.1" /> -->
-    <user name="Pos[femur_T2_left]"         dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[femur_twist_T2_left]"   dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[tibia_T2_left]"         dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[tarsus_T2_left]"        dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_flexion_T2_right]" dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_twist_T2_right]"   dim="1" user="6 500 0.0 1000.0 0.1" />
-    <!-- <user name="Pos[coxa_T2_right]"    dim="1" user="6 500 0.0 1000.0 0.1" /> -->
-    <user name="Pos[femur_T2_right]"        dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[femur_twist_T2_right]"  dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[tibia_T2_right]"        dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[tarsus_T2_right]"       dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_flexion_T3_left]"  dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_twist_T3_left]"    dim="1" user="6 500 0.0 1000.0 0.1" />
-    <!-- <user name="Pos[coxa_T3_left]"     dim="1" user="6 500 0.0 1000.0 0.1" /> -->
-    <user name="Pos[femur_T3_left]"         dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[femur_twist_T3_left]"   dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[tibia_T3_left]"         dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[tarsus_T3_left]"        dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_flexion_T3_right]" dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[coxa_twist_T3_right]"   dim="1" user="6 500 0.0 1000.0 0.1" />
-    <!-- <user name="Pos[coxa_T3_right]"    dim="1" user="6 500 0.0 1000.0 0.1" /> -->
-    <user name="Pos[femur_T3_right]"        dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[femur_twist_T3_right]"  dim="1" user="6 1000 0.0 1000.0 0.1" />
-    <user name="Pos[tibia_T3_right]"        dim="1" user="6 500 0.0 1000.0 0.1" />
-    <user name="Pos[tarsus_T3_right]"       dim="1" user="6 500 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_flexion_T1_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_twist_T1_left]"    dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[coxa_T1_left]"          dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[femur_T1_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[femur_twist_T1_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[tibia_T1_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[tarsus_T1_left]"        dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[coxa_flexion_T1_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_twist_T1_right]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[coxa_T1_right]"         dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[femur_T1_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[femur_twist_T1_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[tibia_T1_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[tarsus_T1_right]"       dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[coxa_flexion_T2_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_twist_T2_left]"    dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[coxa_T2_left]"          dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[femur_T2_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[femur_twist_T2_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[tibia_T2_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[tarsus_T2_left]"        dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[coxa_flexion_T2_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_twist_T2_right]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[coxa_T2_right]"         dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[femur_T2_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[femur_twist_T2_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[tibia_T2_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[tarsus_T2_right]"       dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[coxa_flexion_T3_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_twist_T3_left]"    dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[coxa_T3_left]"          dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[femur_T3_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[femur_twist_T3_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[tibia_T3_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[tarsus_T3_left]"        dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[coxa_flexion_T3_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[coxa_twist_T3_right]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[coxa_T3_right]"         dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Pos[femur_T3_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[femur_twist_T3_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Pos[tibia_T3_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Pos[tarsus_T3_right]"       dim="1" user="6 100 0.0 1000.0 0.1" /> -->
 
-    <user name="Vel[coxa_flexion_T1_left]"  dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_twist_T1_left]"    dim="1" user="6 250 0.0 1000.0 0.1" />
-    <!-- <user name="Vel[coxa_T1_left]"     dim="1" user="6 250 0.0 1000.0 0.1" /> -->
-    <user name="Vel[femur_T1_left]"         dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[femur_twist_T1_left]"   dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tibia_T1_left]"         dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tarsus_T1_left]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_flexion_T1_right]" dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_twist_T1_right]"   dim="1" user="6 250 0.0 1000.0 0.1" />
-    <!-- <user name="Vel[coxa_T1_right]"    dim="1" user="6 250 0.0 1000.0 0.1" /> -->
-    <user name="Vel[femur_T1_right]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[femur_twist_T1_right]"  dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tibia_T1_right]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tarsus_T1_right]"       dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_flexion_T2_left]"  dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_twist_T2_left]"    dim="1" user="6 250 0.0 1000.0 0.1" />
-    <!-- <user name="Vel[coxa_T2_left]"     dim="1" user="6 250 0.0 1000.0 0.1" /> -->
-    <user name="Vel[femur_T2_left]"         dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[femur_twist_T2_left]"   dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tibia_T2_left]"         dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tarsus_T2_left]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_flexion_T2_right]" dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_twist_T2_right]"   dim="1" user="6 250 0.0 1000.0 0.1" />
-    <!-- <user name="Vel[coxa_T2_right]"    dim="1" user="6 250 0.0 1000.0 0.1" /> -->
-    <user name="Vel[femur_T2_right]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[femur_twist_T2_right]"  dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tibia_T2_right]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tarsus_T2_right]"       dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_flexion_T3_left]"  dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_twist_T3_left]"    dim="1" user="6 250 0.0 1000.0 0.1" />
-    <!-- <user name="Vel[coxa_T3_left]"     dim="1" user="6 250 0.0 1000.0 0.1" /> -->
-    <user name="Vel[femur_T3_left]"         dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[femur_twist_T3_left]"   dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tibia_T3_left]"         dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tarsus_T3_left]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_flexion_T3_right]" dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[coxa_twist_T3_right]"   dim="1" user="6 250 0.0 1000.0 0.1" />
-    <!-- <user name="Vel[coxa_T3_right]"    dim="1" user="6 250 0.0 1000.0 0.1" /> -->
-    <user name="Vel[femur_T3_right]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[femur_twist_T3_right]"  dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tibia_T3_right]"        dim="1" user="6 250 0.0 1000.0 0.1" />
-    <user name="Vel[tarsus_T3_right]"       dim="1" user="6 250 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_flexion_T1_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_twist_T1_left]"    dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[coxa_T1_left]"          dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[femur_T1_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[femur_twist_T1_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[tibia_T1_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[tarsus_T1_left]"        dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[coxa_flexion_T1_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_twist_T1_right]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[coxa_T1_right]"         dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[femur_T1_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[femur_twist_T1_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[tibia_T1_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[tarsus_T1_right]"       dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[coxa_flexion_T2_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_twist_T2_left]"    dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[coxa_T2_left]"          dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[femur_T2_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[femur_twist_T2_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[tibia_T2_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[tarsus_T2_left]"        dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[coxa_flexion_T2_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_twist_T2_right]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[coxa_T2_right]"         dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[femur_T2_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[femur_twist_T2_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[tibia_T2_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[tarsus_T2_right]"       dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[coxa_flexion_T3_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_twist_T3_left]"    dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[coxa_T3_left]"          dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[femur_T3_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[femur_twist_T3_left]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[tibia_T3_left]"         dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[tarsus_T3_left]"        dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[coxa_flexion_T3_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[coxa_twist_T3_right]"   dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[coxa_T3_right]"         dim="1" user="6 100 0.0 1000.0 0.1" /> -->
+    <user name="Vel[femur_T3_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[femur_twist_T3_right]"  dim="1" user="6 100 0.0 1000.0 0.1" />
+    <user name="Vel[tibia_T3_right]"        dim="1" user="6 100 0.0 1000.0 0.1" />
+    <!-- <user name="Vel[tarsus_T3_right]"       dim="1" user="6 100 0.0 1000.0 0.1" /> -->
 
     <!-- <framepos name="thorax_position" objtype="body" objname="thorax"/>
     <gyro name="thorax_gyro" site="thorax"/>
@@ -238,7 +238,7 @@
     <jointpos name="tracking_pos[femur_T1_left]"         joint="femur_T1_left" />
     <jointpos name="tracking_pos[femur_twist_T1_left]"   joint="femur_twist_T1_left" />
     <jointpos name="tracking_pos[tibia_T1_left]"         joint="tibia_T1_left" />
-    <jointpos name="tracking_pos[tarsus_T1_left]"        joint="tarsus_T1_left" />
+    <!-- <jointpos name="tracking_pos[tarsus_T1_left]"        joint="tarsus_T1_left" /> -->
     <!-- <framepos name="tracking_pos[claw_T1_left]"   objtype="site" objname="tracking[claw_T1_left]" /> -->
 
     <!-- Right T1 Leg -->
@@ -248,7 +248,7 @@
     <jointpos name="tracking_pos[femur_T1_right]"         joint="femur_T1_right" />
     <jointpos name="tracking_pos[femur_twist_T1_right]"   joint="femur_twist_T1_right" />
     <jointpos name="tracking_pos[tibia_T1_right]"         joint="tibia_T1_right" />
-    <jointpos name="tracking_pos[tarsus_T1_right]"        joint="tarsus_T1_right" />
+    <!-- <jointpos name="tracking_pos[tarsus_T1_right]"        joint="tarsus_T1_right" /> -->
     <!-- <framepos name="tracking_pos[claw_T1_right]"   objtype="site" objname="tracking[claw_T1_right]" /> -->
 
     <!-- Left T2 Leg -->
@@ -258,7 +258,7 @@
     <jointpos name="tracking_pos[femur_T2_left]"         joint="femur_T2_left" />
     <jointpos name="tracking_pos[femur_twist_T2_left]"   joint="femur_twist_T2_left" />
     <jointpos name="tracking_pos[tibia_T2_left]"         joint="tibia_T2_left" />
-    <jointpos name="tracking_pos[tarsus_T2_left]"        joint="tarsus_T2_left" />
+    <!-- <jointpos name="tracking_pos[tarsus_T2_left]"        joint="tarsus_T2_left" /> -->
     <!-- <framepos name="tracking_pos[claw_T2_left]"   objtype="site" objname="tracking[claw_T2_left]" /> -->
 
     <!-- Right T2 Leg -->
@@ -268,7 +268,7 @@
     <jointpos name="tracking_pos[femur_T2_right]"         joint="femur_T2_right" />
     <jointpos name="tracking_pos[femur_twist_T2_right]"   joint="femur_twist_T2_right" />
     <jointpos name="tracking_pos[tibia_T2_right]"         joint="tibia_T2_right" />
-    <jointpos name="tracking_pos[tarsus_T2_right]"        joint="tarsus_T2_right" />
+    <!-- <jointpos name="tracking_pos[tarsus_T2_right]"        joint="tarsus_T2_right" /> -->
     <!-- <framepos name="tracking_pos[claw_T2_right]"   objtype="site" objname="tracking[claw_T2_right]" /> -->
 
     <!-- Left T3 Leg -->
@@ -278,7 +278,7 @@
     <jointpos name="tracking_pos[femur_T3_left]"         joint="femur_T3_left" />
     <jointpos name="tracking_pos[femur_twist_T3_left]"   joint="femur_twist_T3_left" />
     <jointpos name="tracking_pos[tibia_T3_left]"         joint="tibia_T3_left" />
-    <jointpos name="tracking_pos[tarsus_T3_left]"        joint="tarsus_T3_left" />
+    <!-- <jointpos name="tracking_pos[tarsus_T3_left]"        joint="tarsus_T3_left" /> -->
     <!-- <framepos name="tracking_pos[claw_T3_left]"   objtype="site" objname="tracking[claw_T3_left]" /> -->
 
     <!-- Right T3 Leg -->
@@ -288,7 +288,7 @@
     <jointpos name="tracking_pos[femur_T3_right]"         joint="femur_T3_right" />
     <jointpos name="tracking_pos[femur_twist_T3_right]"   joint="femur_twist_T3_right" />
     <jointpos name="tracking_pos[tibia_T3_right]"         joint="tibia_T3_right" />
-    <jointpos name="tracking_pos[tarsus_T3_right]"        joint="tarsus_T3_right" />
+    <!-- <jointpos name="tracking_pos[tarsus_T3_right]"        joint="tarsus_T3_right" /> -->
     <!-- <framepos name="tracking_pos[claw_T3_right]"   objtype="site" objname="tracking[claw_T3_right]" /> -->
 
     <!-- Left T1 Leg -->
@@ -298,7 +298,7 @@
     <jointvel name="tracking_vel[femur_T1_left]"         joint="femur_T1_left" />
     <jointvel name="tracking_vel[femur_twist_T1_left]"   joint="femur_twist_T1_left" />
     <jointvel name="tracking_vel[tibia_T1_left]"         joint="tibia_T1_left" />
-    <jointvel name="tracking_vel[tarsus_T1_left]"        joint="tarsus_T1_left" />
+    <!-- <jointvel name="tracking_vel[tarsus_T1_left]"        joint="tarsus_T1_left" /> -->
     <!-- <framelinvel name="tracking_vel[claw_T1_left]"   objtype="site" objname="tracking[claw_T1_left]" /> -->
 
     <!-- Right T1 Leg -->
@@ -308,7 +308,7 @@
     <jointvel name="tracking_vel[femur_T1_right]"         joint="femur_T1_right" />
     <jointvel name="tracking_vel[femur_twist_T1_right]"   joint="femur_twist_T1_right" />
     <jointvel name="tracking_vel[tibia_T1_right]"         joint="tibia_T1_right" />
-    <jointvel name="tracking_vel[tarsus_T1_right]"        joint="tarsus_T1_right" />
+    <!-- <jointvel name="tracking_vel[tarsus_T1_right]"        joint="tarsus_T1_right" /> -->
     <!-- <framelinvel name="tracking_vel[claw_T1_right]"   objtype="site" objname="tracking[claw_T1_right]" /> -->
 
     <!-- Left T2 Leg -->
@@ -318,7 +318,7 @@
     <jointvel name="tracking_vel[femur_T2_left]"         joint="femur_T2_left" />
     <jointvel name="tracking_vel[femur_twist_T2_left]"   joint="femur_twist_T2_left" />
     <jointvel name="tracking_vel[tibia_T2_left]"         joint="tibia_T2_left" />
-    <jointvel name="tracking_vel[tarsus_T2_left]"        joint="tarsus_T2_left" />
+    <!-- <jointvel name="tracking_vel[tarsus_T2_left]"        joint="tarsus_T2_left" /> -->
     <!-- <framelinvel name="tracking_vel[claw_T2_left]"   objtype="site" objname="tracking[claw_T2_left]" /> -->
 
     <!-- Right T2 Leg -->
@@ -328,7 +328,7 @@
     <jointvel name="tracking_vel[femur_T2_right]"         joint="femur_T2_right" />
     <jointvel name="tracking_vel[femur_twist_T2_right]"   joint="femur_twist_T2_right" />
     <jointvel name="tracking_vel[tibia_T2_right]"         joint="tibia_T2_right" />
-    <jointvel name="tracking_vel[tarsus_T2_right]"        joint="tarsus_T2_right" />
+    <!-- <jointvel name="tracking_vel[tarsus_T2_right]"        joint="tarsus_T2_right" /> -->
     <!-- <framelinvel name="tracking_vel[claw_T2_right]"   objtype="site" objname="tracking[claw_T2_right]" /> -->
 
     <!-- Left T3 Leg -->
@@ -338,7 +338,7 @@
     <jointvel name="tracking_vel[femur_T3_left]"         joint="femur_T3_left" />
     <jointvel name="tracking_vel[femur_twist_T3_left]"   joint="femur_twist_T3_left" />
     <jointvel name="tracking_vel[tibia_T3_left]"         joint="tibia_T3_left" />
-    <jointvel name="tracking_vel[tarsus_T3_left]"        joint="tarsus_T3_left" />
+    <!-- <jointvel name="tracking_vel[tarsus_T3_left]"        joint="tarsus_T3_left" /> -->
     <!-- <framelinvel name="tracking_vel[claw_T3_left]"   objtype="site" objname="tracking[claw_T3_left]" /> -->
 
     <!-- Right T3 Leg -->
@@ -348,14 +348,13 @@
     <jointvel name="tracking_vel[femur_T3_right]"         joint="femur_T3_right" />
     <jointvel name="tracking_vel[femur_twist_T3_right]"   joint="femur_twist_T3_right" />
     <jointvel name="tracking_vel[tibia_T3_right]"         joint="tibia_T3_right" />
-    <jointvel name="tracking_vel[tarsus_T3_right]"        joint="tarsus_T3_right" />
+    <!-- <jointvel name="tracking_vel[tarsus_T3_right]"        joint="tarsus_T3_right" /> -->
     <!-- <framelinvel name="tracking_vel[claw_T3_right]"   objtype="site" objname="tracking[claw_T3_right]" /> -->
 
 
   </sensor>
 
-  <!-- <include file="./keyframes/Fly_free_qpos1_stac.xml" />  -->
-  <include file="./keyframes/Fly_qpos1_stac.xml" /> 
-  <!-- <include file="./keyframes/Fly_free_qpos1_DM.xml" />  -->
+  <!-- <include file="./keyframes/Fly_free_qpos1_stac.xml" /> 
+  <include file="./keyframes/Fly_free_qpos1_DM.xml" />  -->
   <!-- <include file="./keyframes/Fly_walk_free_qpos2.xml" />   -->
 </mujoco>

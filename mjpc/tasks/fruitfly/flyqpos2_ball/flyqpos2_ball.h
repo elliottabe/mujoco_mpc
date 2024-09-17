@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MJPC_TASKS_FRUITFLY_TRACKINGQPOS_TASK_H_
-#define MJPC_TASKS_FRUITFLY_TRACKINGQPOS_TASK_H_
+#ifndef MJPC_TASKS_FRUITFLY_QPOS2_BALL_TASK_H_
+#define MJPC_TASKS_FRUITFLY_QPOS2_BALL_TASK_H_
 
 #include <mujoco/mujoco.h>
 #include "mjpc/task.h"
@@ -21,11 +21,11 @@
 namespace mjpc {
 namespace fruitfly {
 
-class FlyTrackingQpos : public Task {
+class FlyQpos2_ball : public Task {
  public:
   class ResidualFn : public mjpc::BaseResidualFn {
    public:
-    explicit ResidualFn(const FlyTrackingQpos* task, int current_mode = 0,
+    explicit ResidualFn(const FlyQpos2_ball* task, int current_mode = 0,
                         double reference_time = 0)
         : mjpc::BaseResidualFn(task),
           current_mode_(current_mode),
@@ -44,7 +44,7 @@ class FlyTrackingQpos : public Task {
     void Residual(const mjModel* model, const mjData* data,
                   double* residual) const override;
    private:
-    friend class FlyTrackingQpos;
+    friend class FlyQpos2_ball;
     int current_mode_;
     double reference_time_;
     // feet
@@ -57,15 +57,15 @@ class FlyTrackingQpos : public Task {
       kFootT3R,
       kNumFoot
     };
-    
+
     enum FlyJoint {
-      kJointT1_CA_L  = 0, 
-      kJointT1_CT_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L,
-      kJointT1_CA_R, kJointT1_CT_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R,
-      kJointT2_CA_L, kJointT2_CT_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L,
-      kJointT2_CA_R, kJointT2_CT_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R,
-      kJointT3_CA_L, kJointT3_CT_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, 
-      kJointT3_CA_R, kJointT3_CT_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R, 
+      kJointT1_CA_L  = 0,
+      kJointT1_CT_L, kJointT1_CE_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L, kJointT1_TaT_L,
+      kJointT1_CA_R, kJointT1_CT_R, kJointT1_CE_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R, kJointT1_TaT_R,
+      kJointT2_CA_L, kJointT2_CT_L, kJointT2_CE_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L, kJointT2_TaT_L,
+      kJointT2_CA_R, kJointT2_CT_R, kJointT2_CE_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R, kJointT2_TaT_R,
+      kJointT3_CA_L, kJointT3_CT_L, kJointT3_CE_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, kJointT3_TaT_L, 
+      kJointT3_CA_R, kJointT3_CT_R, kJointT3_CE_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R, kJointT3_TaT_R, 
       kNumJoint
     };
 
@@ -75,26 +75,23 @@ class FlyTrackingQpos : public Task {
                                                    kFootT3L, kFootT3R, };
 
 
-    constexpr static FlyJoint kJointAll[kNumJoint] = {kJointT1_CA_L, kJointT1_CT_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L,
-                                                      kJointT1_CA_R, kJointT1_CT_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R,
-                                                      kJointT2_CA_L, kJointT2_CT_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L,
-                                                      kJointT2_CA_R, kJointT2_CT_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R,
-                                                      kJointT3_CA_L, kJointT3_CT_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, 
-                                                      kJointT3_CA_R, kJointT3_CT_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R,};
+    constexpr static FlyJoint kJointAll[kNumJoint] = {kJointT1_CA_L, kJointT1_CT_L, kJointT1_CE_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L, kJointT1_TaT_L,
+                                                      kJointT1_CA_R, kJointT1_CT_R, kJointT1_CE_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R, kJointT1_TaT_R,
+                                                      kJointT2_CA_L, kJointT2_CT_L, kJointT2_CE_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L, kJointT2_TaT_L,
+                                                      kJointT2_CA_R, kJointT2_CT_R, kJointT2_CE_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R, kJointT2_TaT_R,
+                                                      kJointT3_CA_L, kJointT3_CT_L, kJointT3_CE_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, kJointT3_TaT_L, 
+                                                      kJointT3_CA_R, kJointT3_CT_R, kJointT3_CE_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R, kJointT3_TaT_R,};
 
     //  ============  enums  ============
     int jointVel_id_           = -1;
     int thorax_body_id_        = -1;
     int head_site_id_          = -1;
     int control_id_            = -1;
-    int height_id_             = -1;
-    int balance_id_            = -1;
-    int upright_id_            = -1;
     int foot_geom_id_[kNumFoot];
     int joint_geom_id_[kNumJoint];
   };
 
-  FlyTrackingQpos() : residual_(this) {}
+  FlyQpos2_ball() : residual_(this) {}
 
   // --------------------- Transition for fruitfly task ------------------------
   //   Set `data->mocap_pos` based on `data->time` to move the mocap sites.

@@ -38,11 +38,11 @@ std::tuple<int, int, double, double> ComputeInterpolationValues(double index,
   return {index_0, index_1, weight_0, weight_1};
 }
 
-// Hardcoded constant matching keyframes from CMU mocap dataset.
-constexpr double kFps = 200.0;
+constexpr double kFps = 50.0;
 
 constexpr int kMotionLengths[] = {
-    1800,   // FlyQpos2
+    5800,   // FlyQpos2
+    5800,   // FlyQpos2
     // 180,  // FlyStand
     // 1560,  // FlyQpos2
     // 8,  // FlyStand
@@ -72,15 +72,14 @@ const std::array<std::string, 30> body_names = {
     "tarsus_T3_right", "claw_T3_right"};
 
 // names for fruitfly bodies
-const std::array<std::string, 42> joint_names = {
-    "coxa_abduct_T1_left",  "coxa_twist_T1_left",  "coxa_T1_left",  "femur_T1_left",  "femur_twist_T1_left",  "tibia_T1_left",  "tarsus_T1_left", 
-    "coxa_abduct_T1_right", "coxa_twist_T1_right", "coxa_T1_right", "femur_T1_right", "femur_twist_T1_right", "tibia_T1_right", "tarsus_T1_right", 
-    "coxa_abduct_T2_left",  "coxa_twist_T2_left",  "coxa_T2_left",  "femur_T2_left",  "femur_twist_T2_left",  "tibia_T2_left",  "tarsus_T2_left", 
-    "coxa_abduct_T2_right", "coxa_twist_T2_right", "coxa_T2_right", "femur_T2_right", "femur_twist_T2_right", "tibia_T2_right", "tarsus_T2_right",
-    "coxa_abduct_T3_left",  "coxa_twist_T3_left",  "coxa_T3_left",  "femur_T3_left",  "femur_twist_T3_left",  "tibia_T3_left",  "tarsus_T3_left", 
-    "coxa_abduct_T3_right", "coxa_twist_T3_right", "coxa_T3_right", "femur_T3_right", "femur_twist_T3_right", "tibia_T3_right", "tarsus_T3_right"};
+const std::array<std::string, 36> joint_names = {
+    "coxa_flexion_T1_left",  "coxa_twist_T1_left",   "femur_T1_left",  "femur_twist_T1_left",  "tibia_T1_left", "tarsus_T1_left", 
+    "coxa_flexion_T1_right", "coxa_twist_T1_right", "femur_T1_right", "femur_twist_T1_right", "tibia_T1_right", "tarsus_T1_right", 
+    "coxa_flexion_T2_left",  "coxa_twist_T2_left",   "femur_T2_left",  "femur_twist_T2_left",  "tibia_T2_left", "tarsus_T2_left", 
+    "coxa_flexion_T2_right", "coxa_twist_T2_right", "femur_T2_right", "femur_twist_T2_right", "tibia_T2_right", "tarsus_T2_right",
+    "coxa_flexion_T3_left",  "coxa_twist_T3_left",   "femur_T3_left",  "femur_twist_T3_left",  "tibia_T3_left", "tarsus_T3_left", 
+    "coxa_flexion_T3_right", "coxa_twist_T3_right", "femur_T3_right", "femur_twist_T3_right", "tibia_T3_right", "tarsus_T3_right"};
 }  // namespace
-
 namespace mjpc::fruitfly {
 
 std::string FlyQpos2::XmlPath() const {
@@ -120,11 +119,11 @@ void FlyQpos2::ResidualFn::Residual(const mjModel *model, const mjData *data,
   int counter = 0;
 
   // ----- joint velocity ----- //
-  for (ResidualFn::FlyJoint joint : ResidualFn::kJointAll)  {
-    // current joint velocity
-    residual[counter] = data->qvel[joint];
-    counter += 1;
-  };
+  // for (ResidualFn::FlyJoint joint : ResidualFn::kJointAll)  {
+  //   // current joint velocity
+  //   residual[counter] = data->qvel[joint];
+  //   counter += 1;
+  // };
 
   // // ----- action ----- //
   // for (ResidualFn::FlyJoint joint : ResidualFn::kJointAll)  {
@@ -258,7 +257,7 @@ void FlyQpos2::TransitionLocked(mjModel *model, mjData *d) {
 // save task-related ids
 void FlyQpos2::ResetLocked(const mjModel* model) {
   // ----------  task identifiers  ----------
-  residual_.jointVel_id_ = CostTermByName(model, "JointVel");
+  // residual_.jointVel_id_ = CostTermByName(model, "JointVel");
   residual_.control_id_ = CostTermByName(model, "Control");
 
 
