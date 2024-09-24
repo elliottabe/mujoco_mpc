@@ -39,7 +39,7 @@ std::tuple<int, int, double, double> ComputeInterpolationValues(double index,
 }
 
 // Hardcoded constant matching keyframes from CMU mocap dataset.
-constexpr double kFps = 60.0;
+constexpr double kFps = 20.0;
 
 constexpr int kMotionLengths[] = {
     // 1800,   // FlytrackingQpos
@@ -72,15 +72,14 @@ const std::array<std::string, 30> body_names = {
     "tarsus_T3_right", "claw_T3_right"};
 
 // names for fruitfly bodies
-const std::array<std::string, 30> joint_names = {
-    "coxa_flexion_T1_left",  "coxa_twist_T1_left",   "femur_T1_left",  "femur_twist_T1_left",  "tibia_T1_left", 
-    "coxa_flexion_T1_right", "coxa_twist_T1_right", "femur_T1_right", "femur_twist_T1_right", "tibia_T1_right", 
-    "coxa_flexion_T2_left",  "coxa_twist_T2_left",   "femur_T2_left",  "femur_twist_T2_left",  "tibia_T2_left", 
-    "coxa_flexion_T2_right", "coxa_twist_T2_right", "femur_T2_right", "femur_twist_T2_right", "tibia_T2_right",
-    "coxa_flexion_T3_left",  "coxa_twist_T3_left",   "femur_T3_left",  "femur_twist_T3_left",  "tibia_T3_left", 
-    "coxa_flexion_T3_right", "coxa_twist_T3_right", "femur_T3_right", "femur_twist_T3_right", "tibia_T3_right"};
+const std::array<std::string, 36> joint_names = {
+    "coxa_flexion_T1_left",  "coxa_twist_T1_left",   "femur_T1_left",  "femur_twist_T1_left",  "tibia_T1_left", "tarsus_T1_left", 
+    "coxa_flexion_T1_right", "coxa_twist_T1_right", "femur_T1_right", "femur_twist_T1_right", "tibia_T1_right", "tarsus_T1_right", 
+    "coxa_flexion_T2_left",  "coxa_twist_T2_left",   "femur_T2_left",  "femur_twist_T2_left",  "tibia_T2_left", "tarsus_T2_left", 
+    "coxa_flexion_T2_right", "coxa_twist_T2_right", "femur_T2_right", "femur_twist_T2_right", "tibia_T2_right", "tarsus_T2_right",
+    "coxa_flexion_T3_left",  "coxa_twist_T3_left",   "femur_T3_left",  "femur_twist_T3_left",  "tibia_T3_left", "tarsus_T3_left", 
+    "coxa_flexion_T3_right", "coxa_twist_T3_right", "femur_T3_right", "femur_twist_T3_right", "tibia_T3_right", "tarsus_T3_right"};
 }  // namespace
-
 
 namespace mjpc::fruitfly {
 
@@ -123,11 +122,12 @@ void FlyTrackingQpos::ResidualFn::Residual(const mjModel *model, const mjData *d
 
   // ----- joint velocity ----- //
   
-  for (ResidualFn::FlyJoint joint : ResidualFn::kJointAll)  {
-    // current joint velocity
-    residual[counter] = data->qvel[joint];
-    counter += 1;
-  }
+  // for (ResidualFn::FlyJoint joint : ResidualFn::kJointAll)  {
+  //   // current joint velocity
+  //   residual[counter] = data->qvel[joint];
+  //   counter += 1;
+  // }
+
   // mju_copy(residual + counter, data->qvel - 12, model->nv - 12);
   // counter += model->nv - 12;
 
@@ -149,14 +149,13 @@ void FlyTrackingQpos::ResidualFn::Residual(const mjModel *model, const mjData *d
     foot_pos[foot] = data->site_xpos + 3 * foot_geom_id_[foot];
   }
   
-  double avg_foot_pos = 0.167*(foot_pos[kFootT1L][2] + foot_pos[kFootT1R][2] + foot_pos[kFootT2L][2] + foot_pos[kFootT2R][2] + foot_pos[kFootT3L][2] + foot_pos[kFootT3R][2]);
+  // double avg_foot_pos = 0.167*(foot_pos[kFootT1L][2] + foot_pos[kFootT1R][2] + foot_pos[kFootT2L][2] + foot_pos[kFootT2R][2] + foot_pos[kFootT3L][2] + foot_pos[kFootT3R][2]);
   // avg_foot_pos = 0.167*(foot_pos[kFootT1L][2] + foot_pos[kFootT1R][2] + foot_pos[kFootT2L][2] + foot_pos[kFootT2R][2] + foot_pos[kFootT3L][2] + foot_pos[kFootT3R][2]);
   double* coxa_right = data->site_xpos + 3 * mj_name2id(model, mjOBJ_SITE, "tracking_pos[coxa_T3_right]");
   double* coxa_left = data->site_xpos + 3 * mj_name2id(model, mjOBJ_SITE, "tracking_pos[coxa_T3_left]");
-  // double* coxa_left = SensorByName(model, data, "tracking_pos[coxa_T2_left]");
   // double* foot_right = foot_pos[kFootT2L];
   // double* foot_left = foot_pos[kFootT2R];
-  residual[counter++] = avg_foot_pos - thorax_height - 0.12;
+  // residual[counter++] = avg_foot_pos - thorax_height - 0.12;
 
 
   // capture point
@@ -169,7 +168,6 @@ void FlyTrackingQpos::ResidualFn::Residual(const mjModel *model, const mjData *d
   capture_point[2] = 1.0e-3;
 
   // project onto line segment
-
   double axis[3];
   double center[3];
   double vec[3];
@@ -404,7 +402,7 @@ void FlyTrackingQpos::TransitionLocked(mjModel *model, mjData *d) {
 // save task-related ids
 void FlyTrackingQpos::ResetLocked(const mjModel* model) {
   // ----------  task identifiers  ----------
-  residual_.jointVel_id_ = CostTermByName(model, "JointVel");
+  // residual_.jointVel_id_ = CostTermByName(model, "JointVel");
   residual_.control_id_ = CostTermByName(model, "Control");
   residual_.height_id_ = CostTermByName(model, "Height");
   residual_.balance_id_ = CostTermByName(model, "Balance");

@@ -80,6 +80,7 @@ const std::array<std::string, 36> joint_names = {
     "coxa_flexion_T3_left",  "coxa_twist_T3_left",   "femur_T3_left",  "femur_twist_T3_left",  "tibia_T3_left", "tarsus_T3_left", 
     "coxa_flexion_T3_right", "coxa_twist_T3_right", "femur_T3_right", "femur_twist_T3_right", "tibia_T3_right", "tarsus_T3_right"};
 }  // namespace
+
 namespace mjpc::fruitfly {
 
 std::string FlyQpos2::XmlPath() const {

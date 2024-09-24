@@ -60,12 +60,12 @@ class FlyTrackingQpos : public Task {
     
     enum FlyJoint {
       kJointT1_CA_L  = 0, 
-      kJointT1_CT_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L,
-      kJointT1_CA_R, kJointT1_CT_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R,
-      kJointT2_CA_L, kJointT2_CT_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L,
-      kJointT2_CA_R, kJointT2_CT_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R,
-      kJointT3_CA_L, kJointT3_CT_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, 
-      kJointT3_CA_R, kJointT3_CT_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R, 
+      kJointT1_CT_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L, kJointT1_TaT_L,
+      kJointT1_CA_R, kJointT1_CT_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R, kJointT1_TaT_R,
+      kJointT2_CA_L, kJointT2_CT_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L, kJointT2_TaT_L,
+      kJointT2_CA_R, kJointT2_CT_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R, kJointT2_TaT_R,
+      kJointT3_CA_L, kJointT3_CT_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, kJointT3_TaT_L, 
+      kJointT3_CA_R, kJointT3_CT_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R, kJointT3_TaT_R, 
       kNumJoint
     };
 
@@ -75,15 +75,15 @@ class FlyTrackingQpos : public Task {
                                                    kFootT3L, kFootT3R, };
 
 
-    constexpr static FlyJoint kJointAll[kNumJoint] = {kJointT1_CA_L, kJointT1_CT_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L,
-                                                      kJointT1_CA_R, kJointT1_CT_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R,
-                                                      kJointT2_CA_L, kJointT2_CT_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L,
-                                                      kJointT2_CA_R, kJointT2_CT_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R,
-                                                      kJointT3_CA_L, kJointT3_CT_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, 
-                                                      kJointT3_CA_R, kJointT3_CT_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R,};
+    constexpr static FlyJoint kJointAll[kNumJoint] = {kJointT1_CA_L, kJointT1_CT_L, kJointT1_FE_L, kJointT1_FT_L, kJointT1_TiE_L, kJointT1_TaT_L,
+                                                      kJointT1_CA_R, kJointT1_CT_R, kJointT1_FE_R, kJointT1_FT_R, kJointT1_TiE_R, kJointT1_TaT_R,
+                                                      kJointT2_CA_L, kJointT2_CT_L, kJointT2_FE_L, kJointT2_FT_L, kJointT2_TiE_L, kJointT2_TaT_L,
+                                                      kJointT2_CA_R, kJointT2_CT_R, kJointT2_FE_R, kJointT2_FT_R, kJointT2_TiE_R, kJointT2_TaT_R,
+                                                      kJointT3_CA_L, kJointT3_CT_L, kJointT3_FE_L, kJointT3_FT_L, kJointT3_TiE_L, kJointT3_TaT_L, 
+                                                      kJointT3_CA_R, kJointT3_CT_R, kJointT3_FE_R, kJointT3_FT_R, kJointT3_TiE_R, kJointT3_TaT_R,};
 
     //  ============  enums  ============
-    int jointVel_id_           = -1;
+    // int jointVel_id_           = -1;
     int thorax_body_id_        = -1;
     int head_site_id_          = -1;
     int control_id_            = -1;
